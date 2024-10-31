@@ -35,7 +35,8 @@
             </div>
             <div class="row mt-3">
                 <div class="col-12">
-                    <a class="btn btn-success" id="btn_download" href="#" download="">Скачать</a>
+                    <a class="btn btn-success" id="btn_download" href="#" download="">Скачать файл</a>
+                    <a class="btn btn-danger" id="btn_download_all" href="#" download="">Скачать весь блок</a>
                 </div>
             </div>
         </div>
@@ -62,8 +63,7 @@
         }
         document.getElementById("block_tasks").innerHTML = load_result
 
-        function ChangeBlock() {
-            let str = document.getElementById("block_tasks").value
+        function GetNumber() {
             let count = 0
             for (let i = 0; i < tasks.length; i++) {
                 let str = document.getElementById("block_tasks").value
@@ -72,8 +72,13 @@
                     break
                 }
             }
+            return count
+        }
+
+        function ChangeBlock() {
+            let str = document.getElementById("block_tasks").value
             let result = ""
-            for (let i = 0; i < count; i++) {
+            for (let i = 0; i < GetNumber(); i++) {
                 result += `<option value="Task ${alphabet[i]}">Задание ${alphabet[i]}</option>`
             }
             document.getElementById("current_task").innerHTML = result
@@ -81,7 +86,8 @@
         }
 
         function ChangeTask() {
-            document.getElementById("btn_download").href = `Files/${document.getElementById("block_tasks").value}/${document.getElementById("current_task").value}.py`
+            document.getElementById("btn_download").href = `Files/Answers/${document.getElementById("block_tasks").value}/${document.getElementById("current_task").value}.py`
+            document.getElementById("btn_download_all").href = `Files/Archives/${document.getElementById("block_tasks").value}.zip`
         }
 
         ChangeBlock()
