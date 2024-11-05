@@ -1,5 +1,8 @@
 x = int(input())
-d = 2
-while x % d != 0:
-    d += 1
-print(d)
+delit = 2
+result = x
+while delit * delit <= x:
+    if x % delit == 0:
+        result = delit
+    delit += 1
+print(delit)
