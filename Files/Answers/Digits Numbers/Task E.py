@@ -1,12 +1,13 @@
 n = int(input())
-a = n % 10
 nearby = False
+a = n % 10
+n //= 10
 while n > 0:
-    b = a
-    n //= 10
-    a = n % 10
+    b = n % 10
     if a == b:
         nearby = True
+    n //= 10
+    a = b
 if nearby:
     print("YES")
 else:
