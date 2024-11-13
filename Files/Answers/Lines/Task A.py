@@ -1,0 +1,5 @@
+str = input()
+num = str.count("a")
+str = str.replace("a", "b")
+print(num)
+print(str)
