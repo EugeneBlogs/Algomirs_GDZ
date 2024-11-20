@@ -1,3 +1,9 @@
 str = input()
-words = str.split(" ")
-print(words[0])
+result = ""
+for s in str:
+    if s != " ":
+        result += s
+    else:
+        if result != "":
+            break
+print(result)
