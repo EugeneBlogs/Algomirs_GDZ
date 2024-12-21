@@ -7,30 +7,281 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Алгомиры</title>
+    <style>
+        /* Шрифт */
+        @font-face {
+            font-family: "Cornerita";
+            src: url("/Cornerita.ttf") format("truetype");
+            font-style: normal;
+            font-weight: normal;
+        }
+
+        body {
+            font-family: "Cornerita";
+        }
+
+        /* Заголовок */
+        .main {
+            display: grid;
+        }
+
+        .main span {
+            grid-row-start: 1;
+            grid-column-start: 1;
+            font-size: 4rem;
+            --stack-height: calc(100% / var(--stacks) - 1px);
+            --inverse-index: calc(calc(var(--stacks) - 1) - var(--index));
+            --clip-top: calc(var(--stack-height) * var(--index));
+            --clip-bottom: calc(var(--stack-height) * var(--inverse-index));
+            clip-path: inset(var(--clip-top) 0 var(--clip-bottom) 0);
+            animation: stack 340ms cubic-bezier(.46, .29, 0, 1.24) 1 backwards calc(var(--index) * 120ms), glitch 2s ease infinite 2s alternate-reverse;
+        }
+
+        .main span:nth-child(odd) {
+            --glitch-translate: 15px;
+        }
+
+        .main span:nth-child(even) {
+            --glitch-translate: -15px;
+        }
+
+        @keyframes stack {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%);
+                text-shadow: -2px 3px 0 red, 2px -3px 0 blue;
+            }
+
+            60% {
+                opacity: 0.5;
+                transform: translateX(50%);
+            }
+
+            80% {
+                transform: none;
+                opacity: 1;
+                text-shadow: 2px -3px 0 red, -2px 3px 0 blue;
+            }
+
+            100% {
+                text-shadow: none;
+            }
+        }
+
+        @keyframes glitch {
+            0% {
+                text-shadow: -2px 3px 0 red, 2px -3px 0 blue;
+                transform: translate(var(--glitch-translate));
+            }
+
+            2% {
+                text-shadow: 2px -3px 0 red, -2px 3px 0 blue;
+            }
+
+            4%,
+            100% {
+                text-shadow: none;
+                transform: none;
+            }
+        }
+
+        /* Гирлянда */
+        .lightrope {
+            display: none;
+            white-space: nowrap;
+            overflow: hidden;
+            position: absolute;
+            z-index: -999;
+            margin: -15px 0 0 0;
+            padding: 0;
+            pointer-events: none;
+            width: 100%;
+        }
+
+        .lightrope li {
+            position: relative;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
+            list-style: none;
+            display: block;
+            width: 15px;
+            height: 30px;
+            border-radius: 50%;
+            margin: 20px;
+            display: inline-block;
+            -webkit-animation-name: flash-1;
+            animation-name: flash-1;
+            -webkit-animation-duration: 0.5s;
+            animation-duration: 0.5s;
+        }
+
+        .lightrope li:nth-child(2n+1) {
+            -webkit-animation-name: flash-2;
+            animation-name: flash-2;
+            -webkit-animation-duration: 0.6s;
+            animation-duration: 0.6s;
+        }
+
+        .lightrope li:nth-child(4n+2) {
+            -webkit-animation-name: flash-3;
+            animation-name: flash-3;
+            -webkit-animation-duration: 0.7s;
+            animation-duration: 0.7s;
+        }
+
+        .lightrope li:nth-child(odd) {
+            -webkit-animation-duration: 0.8s;
+            animation-duration: 0.8s;
+        }
+
+        .lightrope li:nth-child(3n+1) {
+            -webkit-animation-duration: 0.9s;
+            animation-duration: 0.9s;
+        }
+
+        .lightrope li:before {
+            content: "";
+            position: absolute;
+            background: #222;
+            width: 10px;
+            height: 9.33333px;
+            border-radius: 3px;
+            top: -4.66667px;
+            left: 1px;
+        }
+
+        .lightrope li:after {
+            content: "";
+            top: -14px;
+            left: 9px;
+            position: absolute;
+            width: 52px;
+            height: 18px;
+            border-bottom: solid black 2px;
+            border-radius: 50%;
+        }
+
+        .lightrope li:first-child {
+            margin-left: -40px;
+        }
+
+        @-webkit-keyframes flash-1 {
+
+            0%,
+            100% {
+                background: #00f76b;
+                box-shadow: 0px 4.66667px 24px 3px #00f76b;
+            }
+
+            50% {
+                background: rgba(0, 247, 107, 0.4);
+                box-shadow: 0px 4.66667px 24px 3px rgba(0, 247, 107, 0.2);
+            }
+        }
+
+        @keyframes flash-1 {
+
+            0%,
+            100% {
+                background: #00f76b;
+                box-shadow: 0px 4.66667px 24px 3px #00f76b;
+            }
+
+            50% {
+                background: rgba(0, 247, 107, 0.4);
+                box-shadow: 0px 4.66667px 24px 3px rgba(0, 247, 107, 0.2);
+            }
+        }
+
+        @-webkit-keyframes flash-2 {
+
+            0%,
+            100% {
+                background: blue;
+                box-shadow: 0px 4.66667px 24px 3px blue;
+            }
+
+            50% {
+                background: rgba(0, 0, 255, 0.4);
+                box-shadow: 0px 4.66667px 24px 3px rgba(0, 0, 255, 0.2);
+            }
+        }
+
+        @keyframes flash-2 {
+
+            0%,
+            100% {
+                background: #0082ff;
+                box-shadow: 0px 4.66667px 24px 3px #0082ff;
+            }
+
+            50% {
+                background: rgba(0, 130, 255, 0.4);
+                box-shadow: 0px 4.66667px 24px 3px rgba(0, 130, 255, 0.2);
+            }
+        }
+
+        @-webkit-keyframes flash-3 {
+
+            0%,
+            100% {
+                background: #f70031;
+                box-shadow: 0px 4.66667px 24px 3px #f70031;
+            }
+
+            50% {
+                background: rgba(247, 0, 49, 0.4);
+                box-shadow: 0px 4.66667px 24px 3px rgba(247, 0, 49, 0.2);
+            }
+        }
+
+        @keyframes flash-3 {
+
+            0%,
+            100% {
+                background: #f70031;
+                box-shadow: 0px 4.66667px 24px 3px #f70031;
+            }
+
+            50% {
+                background: rgba(247, 0, 49, 0.4);
+                box-shadow: 0px 4.66667px 24px 3px rgba(247, 0, 49, 0.2);
+            }
+        }
+    </style>
 </head>
 
 <body>
     <section>
+        <ul class="lightrope"></ul>
         <div class="container text-center pt-5">
             <div class="row">
                 <div class="col-12">
-                    <h1>Алгомиры</h1>
+                    <div style="flex-direction: column;">
+                        <div class="main" style="--stacks: 3;">
+                            <span style="--index: 0;">Алгомиры</span>
+                            <span style="--index: 1;">Алгомиры</span>
+                            <span style="--index: 2;">Алгомиры</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="col-4">
-                    <h6>Блок заданий:</h6>
-                </div>
-                <div class="col-8">
-                    <select class="form-select" id="block_tasks" onchange="ChangeBlock()"></select>
+                <div class="col-12">
+                    <div class="input-group">
+                        <label class="input-group-text" for="block_tasks">Блок заданий:</label>
+                        <select class="form-select" id="block_tasks" onchange="ChangeBlock()"></select>
+                    </div>
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="col-4">
-                    <h6>Задание:</h6>
-                </div>
-                <div class="col-8">
-                    <select class="form-select" id="current_task" onchange="ChangeTask()"></select>
+                <div class="col-12">
+                    <div class="input-group">
+                        <label class="input-group-text" for="current_task">Задание:</label>
+                        <select class="form-select" id="current_task" onchange="ChangeTask()"></select>
+                    </div>
                 </div>
             </div>
             <div class="row mt-3">
@@ -42,7 +293,36 @@
         </div>
     </section>
 
+    <div class="modal fade" id="feedback">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable text-center">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title text-center">Отзыв о сайте</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <script src="https://forms.yandex.ru/_static/embed.js"></script><iframe
+                        src="https://forms.yandex.ru/u/6766c7e9e010dbafae1505bd/?iframe=1" frameborder="0"
+                        name="ya-form-6766c7e9e010dbafae1505bd" width="650"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
     <script>
+        setTimeout(() => new bootstrap.Modal(document.getElementById("feedback")).show(), 90000)
+
+        let now_date = new Date()
+        if (now_date.getMonth() == 0 || now_date.getMonth() == 11) {
+            for (let i = 0; i < 55; i++) {
+                document.querySelector(".lightrope").innerHTML += "<li></li>"
+            }
+            document.querySelector(".lightrope").style.display = "block"
+        }
+
         let alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
         let tasks =
             [
