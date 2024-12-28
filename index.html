@@ -141,6 +141,58 @@
             text-align: center;
         }
 
+        /* Telegram */
+        .telegram-button {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            z-index: 9999;
+            background-color: #2CA5E0;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3e%3cpath fill='%23FFF' d='M23.91 3.79L20.3 20.84c-.25 1.21-.98 1.5-2 .94l-5.5-4.07-2.66 2.57c-.3.3-.55.56-1.1.56-.72 0-.6-.27-.84-.95L6.3 13.7l-5.45-1.7c-1.18-.35-1.19-1.16.26-1.75l21.26-8.2c.97-.43 1.9.24 1.53 1.73z'/%3e%3c/svg%3e");
+            background-size: 50%;
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+        }
+
+        .telegram-button:before,
+        .telegram-button:after {
+            content: " ";
+            display: block;
+            position: absolute;
+            border: 1px solid #2CA5E0;
+            left: -20px;
+            right: -20px;
+            top: -20px;
+            bottom: -20px;
+            border-radius: 50%;
+            animation: border-animate 1.5s linear infinite;
+            opacity: 0;
+        }
+
+        .telegram-button:after {
+            animation-delay: .5s;
+        }
+
+        @keyframes border-animate {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.2);
+                opacity: 0;
+            }
+        }
+
         /* Гирлянда */
         .lightrope {
             display: none;
@@ -311,7 +363,14 @@
 
 <body>
     <section>
+        <a href="https://t.me/eugene_blogs" target="_blank" rel="nofollow">
+            <span class="telegram-button"></span>
+        </a>
         <ul class="lightrope"></ul>
+        <marquee id="information" scrollamount="20">
+            <h4 class="mt-5 text-uppercase text-warning">На сайт загружены решения на <span id="count">0</span> задачи
+            </h4>
+        </marquee>
         <div class="container text-center pt-5">
             <div class="row">
                 <div class="col-12">
@@ -374,14 +433,6 @@
     <script>
         setTimeout(() => new bootstrap.Modal(document.getElementById("feedback")).show(), 90000)
 
-        let now_date = new Date()
-        if (now_date.getMonth() == 0 || now_date.getMonth() == 11) {
-            for (let i = 0; i < 55; i++) {
-                document.querySelector(".lightrope").innerHTML += "<li></li>"
-            }
-            document.querySelector(".lightrope").style.display = "block"
-        }
-
         let alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
         let tasks =
             [
@@ -405,6 +456,23 @@
                 ["Remember Everything", 9, "Вспомнить всё"],
                 ["Olympiad", 6, "Олимпиадникам"],
             ]
+
+        let now_date = new Date()
+        if (now_date.getMonth() == 0 || now_date.getMonth() == 11) {
+            for (let i = 0; i < 55; i++) {
+                document.querySelector(".lightrope").innerHTML += "<li></li>"
+            }
+            document.querySelector(".lightrope").style.display = "block"
+            document.getElementById("information").style.display = "none"
+        } else {
+            document.querySelector(".lightrope").style.display = "none"
+            document.getElementById("information").style.display = "block"
+            let result = 0
+            for (let i = 0; i < tasks.length; i++) {
+                result += Number(tasks[i][1])
+            }
+            document.getElementById("count").innerHTML = result
+        }
 
         let load_result = ""
         for (let i = 0; i < tasks.length; i++) {
