@@ -1,48 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Алгомиры</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Шрифт */
+        /* Основа */
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #6a3093;
+            --accent-color: #00f76b;
+            --dark-color: #1a1a2e;
+            --light-color: #f8f9fa;
+        }
+
         @font-face {
             font-family: "Cornerita";
             src: url("https://eugeneblogs.github.io/Algomirs_GDZ/Cornerita.ttf") format("truetype");
-            font-style: normal;
             font-weight: normal;
+            font-style: normal;
         }
 
         body {
-            font-family: "Cornerita";
+            font-family: 'Cornerita', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            min-height: 100vh;
+            color: var(--dark-color);
+            overflow-x: hidden;
         }
 
-        /* Заголовок */
-        .main {
+        .navbar-glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .main-title {
             display: grid;
+            margin: 2rem 0;
         }
 
-        .main span {
+        .main-title span {
             grid-row-start: 1;
             grid-column-start: 1;
-            font-size: 4rem;
+            font-size: 4.5rem;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             --stack-height: calc(100% / var(--stacks) - 1px);
             --inverse-index: calc(calc(var(--stacks) - 1) - var(--index));
             --clip-top: calc(var(--stack-height) * var(--index));
             --clip-bottom: calc(var(--stack-height) * var(--inverse-index));
             clip-path: inset(var(--clip-top) 0 var(--clip-bottom) 0);
             animation: stack 340ms cubic-bezier(.46, .29, 0, 1.24) 1 backwards calc(var(--index) * 120ms), glitch 2s ease infinite 2s alternate-reverse;
-        }
-
-        .main span:nth-child(odd) {
-            --glitch-translate: 15px;
-        }
-
-        .main span:nth-child(even) {
-            --glitch-translate: -15px;
         }
 
         @keyframes stack {
@@ -85,26 +102,28 @@
             }
         }
 
-        /* Разделитель */
-        hr {
-            height: 3px;
-            background: grey;
+        .divider {
+            height: 4px;
+            background: linear-gradient(90deg, rgba(78, 84, 200, 0.1) 0%, var(--primary-color) 50%, rgba(78, 84, 200, 0.1) 100%);
+            border-radius: 2px;
+            margin: 2rem auto;
+            width: 80%;
             position: relative;
             overflow: hidden;
-            border: none;
         }
 
-        hr:after {
+        .divider::after {
             content: "";
-            height: 3px;
-            background: greenyellow;
             position: absolute;
-            width: 20%;
             top: 0;
-            animation: anim-hr 3s linear infinite;
+            left: 0;
+            height: 100%;
+            width: 20%;
+            background: var(--accent-color);
+            animation: slide 3s linear infinite;
         }
 
-        @keyframes anim-hr {
+        @keyframes slide {
             0% {
                 left: -20%;
             }
@@ -118,78 +137,174 @@
             }
         }
 
-        /* Ленточка */
-        .corner-line {
+        .card-custom {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .card-custom:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 10px;
+            padding: 12px 15px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(78, 84, 200, 0.25);
+        }
+
+        .input-group-text {
+            border-radius: 10px 0 0 10px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+
+        .btn-custom {
+            border-radius: 10px;
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-custom::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(255, 255, 255, 0.3), transparent);
+            transform: translateY(-100%);
+            transition: transform 0.3s;
+        }
+
+        .btn-custom:hover::after {
+            transform: translateY(0);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #00f76b 0%, #00c853 100%);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+        }
+
+        .ribbon {
+            position: absolute;
+            top: 0;
+            right: 0;
             width: 150px;
             height: 150px;
-            position: absolute;
-            top: -15px;
-            left: -15px;
+            overflow: hidden;
         }
 
-        .corner-line h4 {
+        .ribbon-content {
             position: absolute;
-            right: -25px;
-            top: 30px;
-            transform: rotate(-45deg);
+            display: block;
             width: 225px;
             padding: 15px 0;
-            background-color: red;
+            background-color: #ff4757;
             color: white;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
             text-align: center;
+            right: -25px;
+            top: 30px;
+            transform: rotate(45deg);
+            font-weight: bold;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
         }
 
-        /* Telegram */
         .telegram-button {
             position: fixed;
-            right: 20px;
-            bottom: 20px;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
+            right: 30px;
+            bottom: 30px;
             width: 60px;
             height: 60px;
-            z-index: 9999;
-            background-color: #2CA5E0;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3e%3cpath fill='%23FFF' d='M23.91 3.79L20.3 20.84c-.25 1.21-.98 1.5-2 .94l-5.5-4.07-2.66 2.57c-.3.3-.55.56-1.1.56-.72 0-.6-.27-.84-.95L6.3 13.7l-5.45-1.7c-1.18-.35-1.19-1.16.26-1.75l21.26-8.2c.97-.43 1.9.24 1.53 1.73z'/%3e%3c/svg%3e");
-            background-size: 50%;
-            background-repeat: no-repeat;
-            background-position: 50% 50%;
-        }
-
-        .telegram-button:before,
-        .telegram-button:after {
-            content: " ";
-            display: block;
-            position: absolute;
-            border: 1px solid #2CA5E0;
-            left: -20px;
-            right: -20px;
-            top: -20px;
-            bottom: -20px;
             border-radius: 50%;
-            animation: border-animate 1.5s linear infinite;
-            opacity: 0;
+            background-color: #2CA5E0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: all 0.3s;
         }
 
-        .telegram-button:after {
-            animation-delay: .5s;
+        .telegram-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
-        @keyframes border-animate {
+        .telegram-button::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid #2CA5E0;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
             0% {
-                transform: scale(0.5);
-                opacity: 0;
+                transform: scale(0.8);
+                opacity: 0.7;
             }
 
-            50% {
-                opacity: 1;
+            70% {
+                transform: scale(1.3);
+                opacity: 0;
             }
 
             100% {
-                transform: scale(1.2);
+                transform: scale(0.8);
                 opacity: 0;
+            }
+        }
+
+        .telegram-icon {
+            color: white;
+            font-size: 30px;
+        }
+
+        .marquee {
+            background: linear-gradient(90deg, rgba(106, 48, 147, 0.1) 0%, rgba(78, 84, 200, 0.2) 100%);
+            padding: 15px 0;
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 20s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(100%);
+            }
+
+            100% {
+                transform: translateX(-100%);
             }
         }
 
@@ -199,7 +314,7 @@
             white-space: nowrap;
             overflow: hidden;
             position: absolute;
-            z-index: -999;
+            z-index: 1;
             margin: -15px 0 0 0;
             padding: 0;
             pointer-events: none;
@@ -208,9 +323,7 @@
 
         .lightrope li {
             position: relative;
-            -webkit-animation-fill-mode: both;
             animation-fill-mode: both;
-            -webkit-animation-iteration-count: infinite;
             animation-iteration-count: infinite;
             list-style: none;
             display: block;
@@ -219,33 +332,25 @@
             border-radius: 50%;
             margin: 20px;
             display: inline-block;
-            -webkit-animation-name: flash-1;
             animation-name: flash-1;
-            -webkit-animation-duration: 0.5s;
             animation-duration: 0.5s;
         }
 
         .lightrope li:nth-child(2n+1) {
-            -webkit-animation-name: flash-2;
             animation-name: flash-2;
-            -webkit-animation-duration: 0.6s;
             animation-duration: 0.6s;
         }
 
         .lightrope li:nth-child(4n+2) {
-            -webkit-animation-name: flash-3;
             animation-name: flash-3;
-            -webkit-animation-duration: 0.7s;
             animation-duration: 0.7s;
         }
 
         .lightrope li:nth-child(odd) {
-            -webkit-animation-duration: 0.8s;
             animation-duration: 0.8s;
         }
 
         .lightrope li:nth-child(3n+1) {
-            -webkit-animation-duration: 0.9s;
             animation-duration: 0.9s;
         }
 
@@ -275,20 +380,6 @@
             margin-left: -40px;
         }
 
-        @-webkit-keyframes flash-1 {
-
-            0%,
-            100% {
-                background: #00f76b;
-                box-shadow: 0px 4.66667px 24px 3px #00f76b;
-            }
-
-            50% {
-                background: rgba(0, 247, 107, 0.4);
-                box-shadow: 0px 4.66667px 24px 3px rgba(0, 247, 107, 0.2);
-            }
-        }
-
         @keyframes flash-1 {
 
             0%,
@@ -300,20 +391,6 @@
             50% {
                 background: rgba(0, 247, 107, 0.4);
                 box-shadow: 0px 4.66667px 24px 3px rgba(0, 247, 107, 0.2);
-            }
-        }
-
-        @-webkit-keyframes flash-2 {
-
-            0%,
-            100% {
-                background: blue;
-                box-shadow: 0px 4.66667px 24px 3px blue;
-            }
-
-            50% {
-                background: rgba(0, 0, 255, 0.4);
-                box-shadow: 0px 4.66667px 24px 3px rgba(0, 0, 255, 0.2);
             }
         }
 
@@ -331,20 +408,6 @@
             }
         }
 
-        @-webkit-keyframes flash-3 {
-
-            0%,
-            100% {
-                background: #f70031;
-                box-shadow: 0px 4.66667px 24px 3px #f70031;
-            }
-
-            50% {
-                background: rgba(247, 0, 49, 0.4);
-                box-shadow: 0px 4.66667px 24px 3px rgba(247, 0, 49, 0.2);
-            }
-        }
-
         @keyframes flash-3 {
 
             0%,
@@ -358,159 +421,260 @@
                 box-shadow: 0px 4.66667px 24px 3px rgba(247, 0, 49, 0.2);
             }
         }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .main-title span {
+                font-size: 3rem;
+            }
+
+            .divider {
+                width: 90%;
+            }
+
+            .btn-custom {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .main-title span {
+                font-size: 2.5rem;
+            }
+
+            .form-control,
+            .form-select,
+            .input-group-text {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+
+            .ribbon {
+                width: 120px;
+                height: 120px;
+            }
+
+            .ribbon-content {
+                width: 180px;
+                font-size: 14px;
+                right: -20px;
+                top: 25px;
+            }
+        }
     </style>
 </head>
 
 <body>
-    <section>
-        <a href="https://t.me/eugene_blogs" target="_blank" rel="nofollow">
-            <span class="telegram-button"></span>
-        </a>
-        <ul class="lightrope"></ul>
-        <marquee id="information" scrollamount="20">
-            <h4 class="mt-5 text-uppercase text-warning">На сайт загружены решения на <span id="count">0</span> задачи
-            </h4>
-        </marquee>
-        <div class="container text-center pt-5">
-            <div class="row">
-                <div class="col-12">
-                    <div style="flex-direction: column;">
-                        <div class="main" style="--stacks: 3;">
-                            <span style="--index: 0;">Алгомиры</span>
-                            <span style="--index: 1;">Алгомиры</span>
-                            <span style="--index: 2;">Алгомиры</span>
-                        </div>
-                    </div>
-                </div>
+    <!-- Гирлянда -->
+    <ul class="lightrope"></ul>
+
+    <!-- Основное содержимое -->
+    <div class="container py-5">
+        <!-- Бегущая строка -->
+        <div class="marquee rounded">
+            <div class="marquee-content">
+                <h4 class="m-0 text-uppercase" style="color: var(--secondary-color);">
+                    На сайт загружены решения на <span id="count" class="fw-bold">0</span> задач
+                </h4>
             </div>
-            <hr>
-            <div class="row mt-3">
-                <div class="col-12">
-                    <div class="input-group">
-                        <label class="input-group-text" for="block_tasks">Блок заданий:</label>
-                        <select class="form-select" id="block_tasks" onchange="ChangeBlock()"></select>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-12">
-                    <div class="input-group">
-                        <label class="input-group-text" for="current_task">Задание:</label>
-                        <select class="form-select" id="current_task" onchange="ChangeTask()"></select>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-12">
-                    <a class="btn btn-success" id="btn_download" href="#" download="">Скачать файл</a>
-                    <a class="btn btn-danger" id="btn_download_all" href="#" download="">Скачать весь блок</a>
+        </div>
+
+        <!-- Заголовок -->
+        <div class="row justify-content-center">
+            <div class="col-12 text-center">
+                <div class="main-title" style="--stacks: 3;">
+                    <span style="--index: 0;">Алгомиры</span>
+                    <span style="--index: 1;">Алгомиры</span>
+                    <span style="--index: 2;">Алгомиры</span>
                 </div>
             </div>
         </div>
-    </section>
 
-    <div class="modal fade" id="feedback">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable text-center">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="corner-line">
-                        <h4>ОТЗЫВ</h4>
+        <div class="divider"></div>
+
+        <!-- Форма выбора -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card card-custom p-4">
+                    <div class="mb-4">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-layer-group me-2"></i>Блок заданий:</span>
+                            <select class="form-select" id="block_tasks" onchange="ChangeBlock()"></select>
+                        </div>
                     </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <script src="https://forms.yandex.ru/_static/embed.js"></script><iframe
-                        src="https://forms.yandex.ru/u/6766c7e9e010dbafae1505bd/?iframe=1" frameborder="0"
-                        name="ya-form-6766c7e9e010dbafae1505bd" width="650"></iframe>
+
+                    <div class="mb-4">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-tasks me-2"></i>Задание:</span>
+                            <select class="form-select" id="current_task" onchange="ChangeTask()"></select>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-3 d-md-flex justify-content-center">
+                        <a class="btn btn-success btn-custom" id="btn_download" href="#" download="">
+                            <i class="fas fa-download me-2"></i>Скачать файл
+                        </a>
+                        <a class="btn btn-danger btn-custom" id="btn_download_all" href="#" download="">
+                            <i class="fas fa-file-archive me-2"></i>Скачать весь блок
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+    <!-- Кнопка Telegram -->
+    <a href="https://t.me/eugene_blogs" target="_blank" rel="nofollow" class="telegram-button">
+        <i class="fab fa-telegram telegram-icon"></i>
+    </a>
+
+    <!-- Модальное окно с отзывом -->
+    <div class="modal fade" id="feedback" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0" style="border-radius: 15px; overflow: hidden;">
+                <!-- Заголовок -->
+                <div class="modal-header position-relative"
+                    style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); border-bottom: none;">
+                    <div class="position-absolute top-0 start-0 w-100 h-100"
+                        style="background-size: 100% auto; opacity: 0.5; background: url('data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><path d='M0,0 L100,0 L100,100 Q50,80 0,100 Z' fill='rgba(255,255,255,0.1)'/></svg>') no-repeat">
+                    </div>
+
+                    <div class="text-center w-100">
+                        <h5 class="modal-title text-white mb-0"
+                            style="font-size: 1.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                            <i class="fas fa-comment-alt me-2"></i>Поделитесь мнением
+                        </h5>
+                    </div>
+
+                    <button type="button" class="btn-close btn-close-white position-absolute top-15 end-15"
+                        data-bs-dismiss="modal" aria-label="Close"
+                        style="filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));"></button>
+                </div>
+
+                <!-- Тело модального окна -->
+                <div class="modal-body p-0" style="background-color: #f8f9fa;">
+                    <!-- Декоративный элемент -->
+                    <div class="position-relative">
+                        <div class="position-absolute top-0 start-50 translate-middle"
+                            style="width: 80px; height: 4px; background: var(--accent-color); border-radius: 2px; transform: translateY(-50%);">
+                        </div>
+                    </div>
+
+                    <!-- Яндекс-форма -->
+                    <div class="p-4">
+                        <script src="https://forms.yandex.ru/_static/embed.js"></script>
+                        <iframe src="https://forms.yandex.ru/u/6766c7e9e010dbafae1505bd/?iframe=1" frameborder="0"
+                            name="ya-form-6766c7e9e010dbafae1505bd" width="100%" height="500"
+                            style="border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);"></iframe>
+                    </div>
+
+                    <!-- Подвал -->
+                    <div class="text-center p-3"
+                        style="background-color: rgba(0,0,0,0.03); border-top: 1px solid rgba(0,0,0,0.05);">
+                        <small class="text-muted">
+                            Ваше мнение поможет сделать сайт лучше!
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     <script>
-        setTimeout(() => new bootstrap.Modal(document.getElementById("feedback")).show(), 90000)
+        // Показываем модальное окно с отзывом через 90 секунд
+        setTimeout(() => {
+            new bootstrap.Modal(document.getElementById("feedback")).show()
+        }, 90000)
 
-        let alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-        let tasks =
-            [
-                ["Start", 17, "Начало"],
-                ["Linear Algorithms", 10, "Линейные алгоритмы"],
-                ["Branching 1", 10, "Ветвление 1"],
-                ["Branching 2", 9, "Ветвление 2"],
-                ["For 1", 7, "Цикл For 1"],
-                ["For 2", 6, "Цикл For 2"],
-                ["For 3", 9, "Цикл For 3"],
-                ["Nested 1", 5, "Вложенные циклы 1"],
-                ["While", 12, "Цикл While"],
-                ["Digits Numbers", 13, "Цифры числа"],
-                ["Lines", 14, "Строки"],
-                ["Arrays 1", 6, "Одномерные массивы 1"],
-                ["Arrays 2", 10, "Одномерные массивы 2"],
-                ["Arrays 3", 7, "Массивы 3"],
-                ["Tasks Arrays", 10, "Задачки на массивы и не только"],
-                ["Championship", 8, "Чемпионат"],
-                ["Combinatorics", 5, "Комбинаторика"],
-                ["Remember Everything", 9, "Вспомнить всё"],
-                ["Olympiad", 6, "Олимпиадникам"],
-                ["Quantity", 9, "Сборник 2 Количество"],
-                ["Functions", 5, "Функции"],
-                ["Winter Tasks", 5, "Зимние задачи"],
-                ["Recursion", 8, "Рекурсия"],
-            ]
+        // Данные для задач
+        const alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+        const tasks = [
+            ["Start", 17, "Начало"],
+            ["Linear Algorithms", 10, "Линейные алгоритмы"],
+            ["Branching 1", 10, "Ветвление 1"],
+            ["Branching 2", 9, "Ветвление 2"],
+            ["For 1", 7, "Цикл For 1"],
+            ["For 2", 6, "Цикл For 2"],
+            ["For 3", 9, "Цикл For 3"],
+            ["Nested 1", 5, "Вложенные циклы 1"],
+            ["While", 12, "Цикл While"],
+            ["Digits Numbers", 13, "Цифры числа"],
+            ["Lines", 14, "Строки"],
+            ["Arrays 1", 6, "Одномерные массивы 1"],
+            ["Arrays 2", 10, "Одномерные массивы 2"],
+            ["Arrays 3", 7, "Массивы 3"],
+            ["Tasks Arrays", 10, "Задачки на массивы и не только"],
+            ["Championship", 8, "Чемпионат"],
+            ["Combinatorics", 5, "Комбинаторика"],
+            ["Remember Everything", 9, "Вспомнить всё"],
+            ["Olympiad", 6, "Олимпиадникам"],
+            ["Quantity", 9, "Сборник 2 Количество"],
+            ["Functions", 5, "Функции"],
+            ["Winter Tasks", 5, "Зимние задачи"],
+            ["Recursion", 9, "Рекурсия"],
+        ]
 
-        let now_date = new Date()
-        if ((now_date.getMonth() == 0 && now_date.getDate() <= 19) || now_date.getMonth() == 11) {
+        // Проверяем новогодний период (декабрь или первая половина января)
+        const nowDate = new Date()
+        if ((nowDate.getMonth() === 0 && nowDate.getDate() <= 19) || nowDate.getMonth() === 11) {
+            // Создаем гирлянду
+            const lightrope = document.querySelector(".lightrope")
             for (let i = 0; i < 55; i++) {
-                document.querySelector(".lightrope").innerHTML += "<li></li>"
+                lightrope.innerHTML += "<li></li>"
             }
-            document.querySelector(".lightrope").style.display = "block"
-            document.getElementById("information").style.display = "none"
+            lightrope.style.display = "block"
+            document.querySelector(".marquee").style.display = "none"
         } else {
-            document.querySelector(".lightrope").style.display = "none"
-            document.getElementById("information").style.display = "block"
-            let result = 0
-            for (let i = 0; i < tasks.length; i++) {
-                result += Number(tasks[i][1])
-            }
-            document.getElementById("count").innerHTML = result
+            // Показываем количество задач
+            const totalTasks = tasks.reduce((sum, task) => sum + task[1], 0)
+            document.getElementById("count").textContent = totalTasks
         }
 
-        let load_result = ""
-        for (let i = 0; i < tasks.length; i++) {
-            load_result += `<option value="${tasks[i][0]}">${tasks[i][2]}</option>`
-        }
-        document.getElementById("block_tasks").innerHTML = load_result
+        // Заполняем выпадающий список блоков заданий
+        const blockTasksSelect = document.getElementById("block_tasks")
+        tasks.forEach(task => {
+            const option = document.createElement("option")
+            option.value = task[0]
+            option.textContent = task[2]
+            blockTasksSelect.appendChild(option)
+        })
 
-        function GetNumber() {
-            let count = 0
-            for (let i = 0; i < tasks.length; i++) {
-                let str = document.getElementById("block_tasks").value
-                if (str == tasks[i][0]) {
-                    count = tasks[i][1]
-                    break
-                }
-            }
-            return count
+        // Функция для получения количества задач в выбранном блоке
+        function getTaskCount() {
+            const selectedBlock = blockTasksSelect.value
+            const task = tasks.find(t => t[0] === selectedBlock)
+            return task ? task[1] : 0
         }
 
+        // Обновляем список заданий при изменении блока
         function ChangeBlock() {
-            let str = document.getElementById("block_tasks").value
-            let result = ""
-            for (let i = 0; i < GetNumber(); i++) {
-                result += `<option value="Task ${alphabet[i]}">Задание ${alphabet[i]}</option>`
+            const currentTaskSelect = document.getElementById("current_task")
+            currentTaskSelect.innerHTML = ""
+
+            const taskCount = getTaskCount()
+            for (let i = 0; i < taskCount; i++) {
+                const option = document.createElement("option")
+                option.value = `Task ${alphabet[i]}`
+                option.textContent = `Задание ${alphabet[i]}`
+                currentTaskSelect.appendChild(option)
             }
-            document.getElementById("current_task").innerHTML = result
+
             ChangeTask()
         }
 
+        // Обновляем ссылки для скачивания при изменении задания
         function ChangeTask() {
-            document.getElementById("btn_download").href = `Files/Answers/${document.getElementById("block_tasks").value}/${document.getElementById("current_task").value}.py`
-            document.getElementById("btn_download_all").href = `Files/Archives/${document.getElementById("block_tasks").value}.zip`
+            const block = blockTasksSelect.value
+            const task = document.getElementById("current_task").value
+
+            document.getElementById("btn_download").href = `Files/Answers/${block}/${task}.py`
+            document.getElementById("btn_download_all").href = `Files/Archives/${block}.zip`
         }
 
+        // Инициализация
         ChangeBlock()
     </script>
 </body>
