@@ -284,27 +284,43 @@
             font-size: 30px;
         }
 
+        /* Бегущая полоса */
         .marquee {
             background: linear-gradient(90deg, rgba(106, 48, 147, 0.1) 0%, rgba(78, 84, 200, 0.2) 100%);
-            padding: 15px 0;
+            padding: 0;
             margin: 20px 0;
             border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            height: 60px;
+            display: flex;
+            align-items: center;
+        }
+
+        .marquee-wrapper {
+            width: 100%;
+            position: relative;
             overflow: hidden;
         }
 
         .marquee-content {
             display: inline-block;
             white-space: nowrap;
+            position: absolute;
             animation: marquee 20s linear infinite;
+            padding-left: 100%;
+            line-height: normal;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
         @keyframes marquee {
             0% {
-                transform: translateX(100%);
+                transform: translateX(0) translateY(-50%);
             }
 
             100% {
-                transform: translateX(-100%);
+                transform: translateX(-100%) translateY(-50%);
             }
         }
 
